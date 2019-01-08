@@ -5,6 +5,17 @@ if [ -z "$1" ] || [ -z "$2" ]
     exit 1
 fi
 
+OPENNMT_PATH="./OpenNMT"
+if [ ! -d "$OPENNMT_PATH" ]; then
+    git clone https://github.com/OpenNMT/OpenNMT.git
+    # Make symlinks to access OpenNMT scripts - change this line if needed
+    [ ! -h tools ] && ln -s $OPENNMT_PATH/tools tools
+    [ ! -h preprocess.lua ] && ln -s $OPENNMT_PATH/preprocess.lua preprocess.lua
+    [ ! -h train.lua ] && ln -s $OPENNMT_PATH/train.lua train.lua
+    [ ! -h translate.lua ] && ln -s $OPENNMT_PATH/translate.lua translate.lua
+    [ ! -h onmt ] && ln -s $OPENNMT_PATH/onmt onmt
+fi
+
 file="data/$1$2.bpe32000"
 if [ -f "$file" ]
 then
